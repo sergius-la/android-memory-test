@@ -21,6 +21,9 @@ class Config:
         config["pids_csv"] = { "sys" :  os.path.join(work_dir, "reports", processing_dir, "sys.csv")}
         with open("config.ini", "w") as configfile:
                 config.write(configfile)
+        
+        if not os.path.exists(Path.processing_dir()):
+            os.makedirs(Path.processing_dir())
 
     @staticmethod
     def _get_config():
