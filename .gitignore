@@ -1,3 +1,12 @@
+# Config
+config.ini
+
+# Reports
+reports/
+
+# VS
+.vscode/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,13 +1,42 @@
 from adb import ADB
+from config import Path
+from config import CSV
+import os
 
 class MemoryUsage:
     
     def __init__(self, dev_id):
         self.dev_id = dev_id
     
-    # TODO: Check for process not found
-    def _get_ps_meminfo(self, ps) -> list:
+    def collect_memory_snapshot(self, pid="sys"):
+        """
+        Collecting memory snapshot into csv files
+        :pid: process or package, by default getting snapshot from system
+        """
 
+        meminfo = self._get_sys_meminfo() if pid == "sys" else self._get_ps_meminfo(pid)
+        headers_row = [i for i in meminfo.keys()]
+        values_row = [i for i in meminfo.values()]
+        path = Path.sys() if pid == "sys" else Path.pid(pid)
+        
+        if os.path.isfile(path):
+            CSV.append_row(path, values_row)
+        else:
+            CSV.append_row(path, headers_row)
+            CSV.append_row(path, values_row)  
+
+    def _get_sys_meminfo(self) -> dict:
+        sys_meminfo = {}
+        raw_sys_meminfo = ADB.get_meminfo(self.dev_id)
+        for line in raw_sys_meminfo:
+            if "Free RAM:" in line:
+                sys_meminfo["Free RAM"] = line.split()[2]
+            elif "Used RAM:" in line:
+                sys_meminfo["Used RAM"] = line.split()[2]
+        return sys_meminfo
+
+    # TODO: Check for process not found
+    def _get_ps_meminfo(self, ps) -> dict:
         meminfo = {}
         raw_meminfo = ADB.get_meminfo(self.dev_id, ps)
         for line in raw_meminfo:
@@ -32,4 +61,7 @@ class MemoryUsage:
 if __name__ == "__main__":
     dev_id = ADB.get_connected_devices()[0]
     memory = MemoryUsage(dev_id)
-    memory._get_ps_meminfo("28703")
+    memory.collect_memory_snapshot(28703)
+    memory.collect_memory_snapshot(28703)
+    memory.collect_memory_snapshot("sys")
+    memory.collect_memory_snapshot("sys")
