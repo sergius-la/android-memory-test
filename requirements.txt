@@ -1,1 +1,2 @@
 git+https://github.com/sergius-la/adb.git@master
+plotly

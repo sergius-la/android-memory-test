@@ -79,9 +79,20 @@ class CSV:
             writer = csv.writer(csvFile)
             writer.writerow(row)
             csvFile.close()
+    
+    @staticmethod
+    def get_csv_values(path, collumn) -> list:
+        res = []
+        with open(path, "r") as csvFile:
+            reader = csv.reader(csvFile)
+            for row in reader:
+                res.append(row[collumn])
+        return res
 
 if __name__ == "__main__":
-    Config.generate("test")
-    Config.add_pid_csv("28703")
+    # Config.generate("test")
+    # Config.add_pid_csv("28703")
     # print(Path.pid(247))
     # print(Path.processing_dir())
+    x = CSV.get_csv_values(Path.sys(), 1)
+    print(len(x))
