@@ -21,16 +21,23 @@ class Runner:
 
     def data_collector(self, iterations):
         pids = self._get_pids()
+        self.before_test()
         for i in range(iterations):
             self.test_actions()
             for pid in pids:
                 self.memory_usage.collect_memory_snapshot(pid)
+        self.after_test()
+
+    def before_test(self):
+        pass
     
     def test_actions(self):
         pass
 
+    def after_test(self):
+        pass
+
 if __name__ == "__main__":
     dev_id = ADB.get_connected_devices()[0]
-    runner = Runner(dev_id, "com.android.settings", "com.android.vending")
+    runner = Runner(dev_id, "com.android.vending")
     runner.data_collector(10)
-    # print(date.today())

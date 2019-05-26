@@ -22,8 +22,13 @@ class Config:
         with open("config.ini", "w") as configfile:
                 config.write(configfile)
         
-        if not os.path.exists(Path.processing_dir()):
-            os.makedirs(Path.processing_dir())
+        processing_dir = Path.processing_dir()
+        if not os.path.exists(processing_dir):
+            os.makedirs(processing_dir)
+        else:
+            files = os.listdir(processing_dir)
+            for f in files:
+                os.remove(os.path.join(processing_dir, f))
 
     @staticmethod
     def _get_config():

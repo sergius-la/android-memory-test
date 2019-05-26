@@ -58,10 +58,4 @@ class MemoryUsage:
                 meminfo["Total"] = line.split()[1]
         return meminfo
 
-if __name__ == "__main__":
-    dev_id = ADB.get_connected_devices()[0]
-    memory = MemoryUsage(dev_id)
-    for i in range(0, 50):
-        memory.collect_memory_snapshot(28703)
-    for i in range(0, 50):
-        memory.collect_memory_snapshot("sys")
+
