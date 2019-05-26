@@ -17,7 +17,8 @@ class Config:
         work_dir = os.getcwd()
         config = configparser.ConfigParser()
         config["Paths"] = { "home_dir" : work_dir,
-                            "processing_dir" : os.path.join(work_dir, "reports", processing_dir)}
+                            "processing_dir" : os.path.join(work_dir, "reports", processing_dir),
+                            "template" : os.path.join(work_dir, "android-memory-test", "template")}
         config["pids_csv"] = { "sys" :  os.path.join(work_dir, "reports", processing_dir, "sys.csv")}
         with open("config.ini", "w") as configfile:
                 config.write(configfile)
@@ -78,6 +79,14 @@ class Path:
     @staticmethod
     def processing_dir():
         return Config._get_value("Paths", "processing_dir")
+    
+    @staticmethod
+    def template_report():
+        return os.path.join(Config._get_value("Paths", "template"), "template.html")
+
+    @staticmethod
+    def template_process():
+        return os.path.join(Config._get_value("Paths", "template"), "process.html")
 
 class CSV:
 
