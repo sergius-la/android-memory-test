@@ -26,8 +26,9 @@ class Graph:
     
     @staticmethod
     def _get_pid_data(pid):
+        index = 7 if pid != "sys" else 2
         data = []
-        for i in range(0, 7):
+        for i in range(0, index):
             data.append(Graph._get_scatter_trace(pid, i))
         return data
 
@@ -37,9 +38,10 @@ class Graph:
         Method generate grapth of memory usage
         """
 
+        title = "PID {}".format(pid) if pid != "sys" else "System"
         data = Graph._get_pid_data(pid)
         layout = go.Layout(
-            title=pid,
+            title=title,
         )
 
         div = plotly.offline.plot(

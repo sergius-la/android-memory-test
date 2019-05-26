@@ -35,7 +35,6 @@ class MemoryUsage:
                 sys_meminfo["Used RAM"] = line.split()[2]
         return sys_meminfo
 
-    # TODO: Check for process not found
     def _get_ps_meminfo(self, ps) -> dict:
         meminfo = {}
         raw_meminfo = ADB.get_meminfo(self.dev_id, ps)
