@@ -20,7 +20,7 @@ class Graph:
             x = vl[1],
             y = vl[2],
             name = vl[0],
-            mode = 'lines+markers'
+            mode = 'lines' # +markers
         )
         return trace
     
